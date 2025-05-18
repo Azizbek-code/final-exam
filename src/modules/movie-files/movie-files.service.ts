@@ -16,17 +16,21 @@ export class MovieFilesService {
                 language: data.language,
                 //@ts-ignore
                 quality: data.quality,
-                
+
 
             }
         })
     }
 
-    async getFile(id:string) {
+    async getFile(id: string) {
         return await this.prisma.movieFile.findMany({
             where: {
-                movieId:id
+                movieId: id
             }
         })
+    }
+
+    async deleteOne(id: string) {
+        return await this.prisma.movieFile.delete({ where: { id } })
     }
 }

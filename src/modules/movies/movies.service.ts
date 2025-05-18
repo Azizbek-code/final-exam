@@ -14,16 +14,16 @@ export class MoviesService {
         }
     }
 
-    async getAll(page: string, limit: string, subscriptionType: any) {
+    async getAll(page: string, limit: string,category:any,search:any, subscriptionType: any) {
         return await this.prisma.movie.findMany({
             skip: +page,
             take: +limit,
             where: {
-                subscriptionType: subscriptionType
+                subscriptionType: subscriptionType,
             },
             select: {
                 movieFiles: true,
-                reviews:true
+                reviews: true
             }
         })
     }
@@ -37,7 +37,7 @@ export class MoviesService {
             select: {
                 movieFiles: true,
                 reviews: true,
-                rating:true,
+                rating: true,
                 movieCategories: {
                     include: {
                         movie: true,
@@ -47,5 +47,13 @@ export class MoviesService {
             },
         });
         return updatedMovie;
+    }
+
+    async deleteOne(id: string) {
+        return await this.prisma.movie.delete({
+            where: {
+                id
+            }
+        })
     }
 }

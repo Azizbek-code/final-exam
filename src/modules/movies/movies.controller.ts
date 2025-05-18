@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req, SetMetadata, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, Req, SetMetadata, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { MoviesService } from './movies.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RoleGuard } from 'src/common/guards/role.guard';
@@ -29,7 +29,7 @@ export class MoviesController {
     @Query('category') category?: string,
     @Query('search') search?: string,
     @Query('subscription_type') subscriptionType?: string,) {
-    return await this.moviesService.getAll(page,limit,subscriptionType)
+    return await this.moviesService.getAll(page,limit,category,search,subscriptionType)
   }
 
   @Get('/:id')
@@ -37,4 +37,11 @@ export class MoviesController {
     return await this.moviesService.getOne(id)
   }
 
+  @Delete('admin/:id')
+  @UseGuards(RoleGuard)
+  @UseGuards(JwtGuard)
+  @SetMetadata('roles', ['admin', 'superadmin'])
+  async deleteOne(@Param('id') id: string) {
+    return await this.moviesService.deleteOne(id)
+  }
 }
