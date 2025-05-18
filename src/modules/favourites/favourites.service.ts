@@ -14,11 +14,25 @@ export class FavouritesService {
         })
     }
 
-    async remove(id:string,user:string) {
+    async getAllFavaurites() {
+        const favaurites = await this.prisma.favorite.findMany({})
+        const count = await this.prisma.favorite.aggregate({
+            _count: {
+                _all: true
+            }
+        })
+        return {
+            favaurites,
+            count
+        }
+    }
+
+    async remove(id: string, user: string) {
         return await this.prisma.favorite.delete({
             where: {
                 id,
-                userId:user
-        }})
+                userId: user
+            }
+        })
     }
 }

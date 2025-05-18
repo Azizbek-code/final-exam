@@ -20,7 +20,10 @@ export class AuthService {
         registerDto.password_hash = hashedPassword
         const { password_hash, ...result } = await this.prisma.user.create({ data: registerDto })
         const access_token = this.jwt.sign(result)
-        return { access_token }
+        return {
+            access_token,
+            result
+         }
     }
 
     async login(loginDto: LoginDto) {
@@ -30,6 +33,6 @@ export class AuthService {
         if (!comparePasword) throw new UnauthorizedException('password or username incorecct')
         const { password_hash, ...result } = findUser
         const access_token = this.jwt.sign(result)
-        return access_token
+        return {access_token,result}
     }
 }

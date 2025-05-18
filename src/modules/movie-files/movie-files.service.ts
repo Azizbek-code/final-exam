@@ -21,4 +21,12 @@ export class MovieFilesService {
             }
         })
     }
+
+    async getFile(id:string) {
+        return await this.prisma.movieFile.findMany({
+            where: {
+                movieId:id
+            }
+        })
+    }
 }

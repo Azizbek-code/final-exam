@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Req, SetMetadata, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, SetMetadata, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { MovieFilesService } from './movie-files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FileMovie } from './dto/file.dto';
@@ -16,5 +16,10 @@ export class MovieFilesController {
   @UseInterceptors(FileInterceptor('posterUrl'))
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body: FileMovie, @Param('id') id: string) {
     return await this.movieFilesService.file(file.filename, body, id)
+  }
+
+  @Get('/:id')
+  async getAllFile(@Param('id') id : string) {
+    return await this.movieFilesService.getFile(id)
   }
 }

@@ -21,6 +21,20 @@ export class RewiewsService {
                 movie: true
             }
         })
+        const totalRating = await this.prisma.review.aggregate({
+            where: { movieId: id },
+            _avg: {
+                rating: true,
+            },
+
+        });
+        const sum = totalRating._avg.rating
+        const ratingMovie = await this.prisma.movie.update({
+            where: { id }, data: {
+                rating: sum
+            }
+        })
+
         return create
     }
 

@@ -14,6 +14,11 @@ export class FavouritesController {
     return await this.favouritesService.addFavaurites(id, user)
   }
 
+  @Get()
+  async getFavaurites() {
+    return await this.favouritesService
+  }
+
   @Delete('/delete/:id')
   @UseGuards(JwtGuard)
   async remove(@Param('id') id: string, @Req() req: Request) {

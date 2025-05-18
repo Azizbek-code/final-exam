@@ -3,7 +3,6 @@ import { DbService } from 'src/core/database/db.service';
 
 @Injectable()
 export class MoviesService {
-    count = 0
     constructor(private prisma: DbService) { }
 
     async addNewMOvie(data: any) {
@@ -21,19 +20,15 @@ export class MoviesService {
             take: +limit,
             where: {
                 subscriptionType: subscriptionType
+            },
+            select: {
+                movieFiles: true,
+                reviews:true
             }
         })
     }
 
     async getOne(id: string) {
-        const totalRating = await this.prisma.review.aggregate({
-            where: { movieId: id }, 
-            _avg: {
-              rating: true,
-            },
-            
-          });
-        const sum = totalRating._avg.rating
         const updatedMovie = await this.prisma.movie.update({
             where: { id },
             data: {
@@ -51,8 +46,6 @@ export class MoviesService {
                 },
             },
         });
-        //@ts-ignore
-        updatedMovie['rating'] = sum
         return updatedMovie;
     }
 }
