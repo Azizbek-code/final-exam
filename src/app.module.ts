@@ -13,10 +13,11 @@ import { MovieCategoryModule } from './modules/movie-category/movie-category.mod
 import { RewiewsModule } from './modules/rewiews/rewiews.module';
 import { FavouritesModule } from './modules/favourites/favourites.module';
 import { MovieFilesModule } from './modules/movie-files/movie-files.module';
+import { MailModule } from './modules/mail/mail.module';
 
 
 @Module({
-  imports: [AuthModule, CoreModule, PlanModule, UsersModule, PaymenModule, UserSubscriptionModule, MoviesModule, CotegoryesModule, MovieCategoryModule, RewiewsModule, FavouritesModule, MovieFilesModule],
+  imports: [AuthModule, CoreModule, PlanModule, UsersModule, PaymenModule, UserSubscriptionModule, MoviesModule, CotegoryesModule, MovieCategoryModule, RewiewsModule, FavouritesModule, MovieFilesModule, MailModule],
   controllers: [],
   providers: [
     {
